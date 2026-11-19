@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Go Search</title>
+<!-- iPhone web app (Home Screen par app jaisa khule) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Go Search">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0c0c0c">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+
+<script>
+/* =====================================================================
+   ⚙️  SETTINGS — SAB KUCH YAHIN SE BADLO
+   ---------------------------------------------------------------------
+   Sirf is block ko edit karo. Neeche ka code chhedne ki zaroorat nahi.
+   Har line ke baad comma ( , ) zaroor rakho, aur text "double quotes" mein.
+   ===================================================================== */
+const SETTINGS = {
+
+  /* ---------- 1. NAAM AUR TEXT ---------- */
+  nameFirst:  "Go",                         // logo ka pehla hissa (gold colour mein)
+  nameSecond: "Search",                     // logo ka doosra hissa
+  tagline:    "Search the web, simply.",    // logo ke neeche ki line
+  placeholder:"Search anything, or try 25*48, 10 km to miles, time",
+  footer:     "Go Search",                  // page ke sabse neeche ka text
+
+  /* ---------- 2. COLOURS ---------- */
+  goldDark:  "#b8892b",     // main colour (logo, buttons, links)
+  goldLight: "#d9ad4f",     // gradient ka doosra colour
+  startDark: false,         // true = page dark mode mein khule
+
+  /* ---------- 3. MERE LINKS (words → link) ----------
+     Jab koi in "words" mein se KOI BHI EK word search kare,
+     aapka link PEHLA RESULT banega, baaki results uske neeche.
+     ➜ Capital/small letter ka fark nahi padta (ATL = atl = Atl).
+     ➜ Word badalna ho: "atl" ki jagah apna word likh do.
+     ➜ Naya word jodna ho: comma laga ke jod do, jaise  ["atl", "ctl", "ktl", "xyz"]
+     ➜ Naya link jodna ho: { ... }, wali poori line copy karke neeche paste karo.
+       words : jin words par dikhe
+       title : result ka heading
+       url   : link
+       note  : heading ke neeche ki line (na chahiye to "" chhod do)        */
+  myLinks: [
+    { words: ["atl", "ctl", "ktl"], title: "Suno AI", url: "https://suno.com/", note: "Make music with AI." },
+    // { words: ["pbx", "portal"], title: "My PBX Portal", url: "https://gc24.yoopbx.com", note: "Login yahan se" },
+  ],
+
+  /* ---------- 4. HOME PAGE KE SUGGESTION BUTTONS ---------- */
+  suggestions: [
+    "Weather today", "100 USD to INR", "Best protein foods", "time",
+    "15% of 2499", "5 feet to cm", "!yt home workout"
+  ],
+
+  /* ---------- 5. WORLD CLOCK ("time" search karne par) ---------- */
+  clocks: [
+    ["India (IST)",      "Asia/Kolkata"],
+    ["New York (ET)",    "America/New_York"],
+    ["Chicago (CT)",     "America/Chicago"],
+    ["Denver (MT)",      "America/Denver"],
+    ["Los Angeles (PT)", "America/Los_Angeles"],
+    ["London",           "Europe/London"],
+  ],
+
+  /* ---------- 6. RESULTS (har tab ke sources) ----------
+     Format: [ "Naam", "colour", "icon letter", "search link", "description" ]
+     Search link mein {q} likho — wahan user ka search apne aap aa jayega.
+     Naya tab chahiye? Bas naya naam aur list jod do, jaise  Music: [ ... ],  */
+  tabs: {
+    All: [
+      ["Google",     "#4285F4", "G", "https://www.google.com/search?q={q}",        "The biggest web index — best for almost anything."],
+      ["DuckDuckGo", "#DE5833", "D", "https://duckduckgo.com/?q={q}",              "Private search, no tracking."],
+      ["Bing",       "#008373", "B", "https://www.bing.com/search?q={q}",          "Microsoft's web search."],
+      ["Perplexity", "#20808D", "P", "https://www.perplexity.ai/search?q={q}",     "AI answer with sources."],
+      ["Reddit",     "#FF4500", "R", "https://www.reddit.com/search/?q={q}",       "Real people's opinions and discussions."],
+    ],
+    Images: [
+      ["Google Images", "#4285F4", "G", "https://www.google.com/search?tbm=isch&q={q}", "Image results from across the web."],
+      ["Bing Images",   "#008373", "B", "https://www.bing.com/images/search?q={q}",     "Large image search with filters."],
+      ["Pinterest",     "#E60023", "P", "https://www.pinterest.com/search/pins/?q={q}", "Ideas and inspiration."],
+      ["Unsplash",      "#111111", "U", "https://unsplash.com/s/photos/{q}",            "Free high-quality photos."],
+    ],
+    Videos: [
+      ["YouTube",       "#FF0000", "Y", "https://www.youtube.com/results?search_query={q}", "Videos, tutorials and music."],
+      ["Google Videos", "#4285F4", "G", "https://www.google.com/search?tbm=vid&q={q}",      "Videos from all sites."],
+    ],
+    News: [
+      ["Google News", "#4285F4", "G", "https://news.google.com/search?q={q}",   "Latest headlines from many outlets."],
+      ["Bing News",   "#008373", "B", "https://www.bing.com/news/search?q={q}", "News search."],
+      ["X (Twitter)", "#111111", "X", "https://x.com/search?q={q}",             "Live posts and reactions."],
+    ],
+    Maps: [
+      ["Google Maps",   "#34A853", "M", "https://www.google.com/maps/search/{q}",          "Places, directions and reviews."],
+      ["OpenStreetMap", "#7EBC6F", "O", "https://www.openstreetmap.org/search?query={q}",  "Free, open map."],
+    ],
+    Shopping: [
+      ["Amazon.in",       "#FF9900", "A", "https://www.amazon.in/s?k={q}",                "Buy online in India."],
+      ["Flipkart",        "#2874F0", "F", "https://www.flipkart.com/search?q={q}",        "Indian online shopping."],
+      ["Google Shopping", "#4285F4", "G", "https://www.google.com/search?tbm=shop&q={q}", "Compare prices across stores."],
+    ],
+    Wiki: [
+      ["Wikipedia",       "#636466", "W",  "https://en.wikipedia.org/w/index.php?search={q}",  "Free encyclopedia."],
+      ["Hindi Wikipedia", "#636466", "वि", "https://hi.wikipedia.org/w/index.php?search={q}",  "हिंदी विकिपीडिया"],
+    ],
+  },
+
+  /* ---------- 7. SHORTCUTS ( !yt cats ) ----------
+     "shortcut": [ "Tab ka naam", us tab mein kaunsa number (0 = pehla) ]   */
+  shortcuts: {
+    yt:   ["Videos", 0],
+    g:    ["All", 0],
+    ddg:  ["All", 1],
+    img:  ["Images", 0],
+    news: ["News", 0],
+    map:  ["Maps", 0],
+    amz:  ["Shopping", 0],
+    fk:   ["Shopping", 1],
+    w:    ["Wiki", 0],
+  },
+
+  /* ---------- 8. "My Links" BUTTON ----------
+     true = browser mein links jodne wala button dikhe, false = chhupa do */
+  showMyLinksButton: true,
+};
+/* ======================= SETTINGS KHATAM ======================= */
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--fg:#1a1a1a;--muted:#6b6b6b;--line:#e6e2d8;--card:#faf8f3;--hover:#f3efe4}
+body.dark{--bg:#0c0c0c;--fg:#f1ede4;--muted:#9a958a;--line:#2a2720;--card:#151411;--hover:#1d1b16}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation}
+body{font-family:Inter,-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;min-height:100dvh;transition:background .2s,color .2s;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);overscroll-behavior-y:none;touch-action:manipulation}
+input,textarea,button{font-size:16px!important;-webkit-appearance:none;appearance:none}
+.chip,.tab,.res,.iconbtn,.row{user-select:none;-webkit-user-select:none}
+a{color:inherit;text-decoration:none}
+.top{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px}
+.iconbtn{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:8px 14px;font:500 13px Inter;cursor:pointer}
+.iconbtn:hover{background:var(--hover)}
+#home{display:flex;flex-direction:column;align-items:center;padding:12vh 20px 40px}
+.logo{font-weight:800;letter-spacing:-2px;font-size:clamp(52px,10vw,88px);line-height:1}
+.logo .k{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:var(--muted);margin:10px 0 30px;font-size:14px}
+form.box{width:100%;max-width:620px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 20px;background:var(--bg);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+form.box:focus-within{border-color:var(--gold)}
+form.box svg{flex:none;color:var(--muted)}
+form.box input{flex:1;border:0;outline:0;background:transparent;color:var(--fg);font:400 17px Inter;padding:10px 0;min-width:0}
+form.box button,.gbtn{border:0;border-radius:999px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font:600 14px Inter;padding:11px 20px;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px;max-width:640px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--gold)}
+.recent{margin-top:26px;width:100%;max-width:620px}
+.recent h4{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;justify-content:space-between}
+.recent h4 span{cursor:pointer;text-transform:none;letter-spacing:0}
+.recent .row{padding:9px 12px;border-radius:10px;cursor:pointer;font-size:14px}
+.recent .row:hover{background:var(--hover)}
+#results{display:none}
+.rhead{display:flex;align-items:center;gap:22px;padding:18px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.rhead .logo{font-size:30px;letter-spacing:-1px;cursor:pointer}
+.rhead form.box{max-width:640px;flex:1;min-width:260px}
+.tabs{display:flex;gap:4px;padding:0 24px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{padding:12px 14px;font-size:14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab.on{color:var(--fg);border-color:var(--gold);font-weight:600}
+main{max-width:720px;padding:22px 24px 60px}
+.answer{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:20px 22px;margin-bottom:22px}
+.answer .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.answer .big{font-size:34px;font-weight:700;margin-top:6px;word-break:break-all}
+.answer .sub{color:var(--muted);font-size:14px;margin-top:6px}
+.answer table{margin-top:10px;border-collapse:collapse;font-size:15px}
+.answer td{padding:5px 18px 5px 0}
+.pin{border:1.5px solid var(--gold);background:var(--card);border-radius:16px;padding:16px 20px;margin-bottom:14px}
+.pin .lbl{font-size:12px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.pin .t{font-size:20px;font-weight:600;margin-top:6px;display:inline-block}
+.pin a.t{color:var(--gold)}.pin a.t:hover{text-decoration:underline}
+.pin .u{font-size:12px;color:var(--muted);word-break:break-all;margin-top:2px}
+.pin .n{font-size:15px;margin-top:8px;line-height:1.55;white-space:pre-wrap}
+.note{font-size:13px;color:var(--muted);margin-bottom:14px}
+.res{display:block;padding:14px 16px;border-radius:14px;margin-bottom:6px}
+.res:hover{background:var(--hover)}
+.res .src{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.res .fav{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff;flex:none}
+.res .t{font-size:19px;color:var(--gold);margin-top:6px;font-weight:500}
+.res:hover .t{text-decoration:underline}
+.res .d{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:5vh 14px;z-index:9;overflow:auto}
+.modal{background:var(--bg);border:1px solid var(--line);border-radius:18px;width:100%;max-width:560px;padding:22px}
+.modal h3{font-size:20px}.hint{font-size:13px;color:var(--muted);margin:4px 0 16px}
+.fld{display:block;width:100%;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:10px;padding:10px 12px;font:400 14px Inter;margin-bottom:10px;outline:0}
+.fld:focus{border-color:var(--gold)}
+textarea.fld{min-height:80px;resize:vertical}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.gbtn{border-radius:10px;padding:10px 16px}
+.lbtn{border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--fg);font:500 14px Inter;padding:10px 14px;cursor:pointer}
+.item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;display:flex;gap:10px}
+.item .kw{font-size:12px;color:var(--gold);font-weight:600}
+.item .it{font-weight:600;font-size:15px;margin-top:2px}
+.item .iu{font-size:12px;color:var(--muted);word-break:break-all}
+.item .acts{margin-left:auto;display:flex;gap:6px;flex:none;align-items:flex-start}
+.item .acts button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:12px}
+.msg{font-size:13px;color:var(--gold);min-height:18px;margin-top:8px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:30px}
+@media(max-width:600px){.rhead{padding:14px}.tabs{padding:0 14px}main{padding:16px 14px}}
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="iconbtn" id="linksBtn">📌 My Links</button>
+  <button class="iconbtn" id="themeBtn">🌙 Dark</button>
+</div>
+
+<section id="home">
+  <div class="logo"><span class="k" data-n1></span> <span data-n2></span></div>
+  <div class="tag" id="tagline"></div>
+  <form class="box" id="homeForm">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="homeQ" type="search" enterkeyhint="search" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false">
+    <button type="submit">Search</button>
+  </form>
+  <div class="chips" id="chips"></div>
+  <div class="recent" id="recent"></div>
+</section>
+
+<section id="results">
+  <div class="rhead">
+    <div class="logo" id="goHome"><span class="k" data-n1></span> <span data-n2></span></div>
+    <form class="box" id="resForm">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="resQ" type="search" enterkeyhint="search" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <main id="out"></main>
+</section>
+
+<div class="ov" id="ov">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h3>📌 My Links</h3><button class="lbtn" id="closeBtn">✕</button></div>
+    <div class="hint">Links added here are saved in this browser only. For links on every device, add them in SETTINGS → myLinks inside index.html.</div>
+    <input class="fld" id="fKw" placeholder="Words (comma separated) — e.g. pbx, portal">
+    <input class="fld" id="fTitle" placeholder="Title — e.g. My PBX Portal">
+    <input class="fld" id="fUrl" placeholder="Link (optional) — e.g. https://example.com">
+    <textarea class="fld" id="fNote" placeholder="Note (optional)"></textarea>
+    <div class="btns"><button class="gbtn" id="saveBtn">Save</button><button class="lbtn" id="cancelEdit" style="display:none">Cancel edit</button></div>
+    <div class="msg" id="msg"></div>
+    <div id="list"></div>
+  </div>
+</div>
+
+<footer id="footer"></footer>
+
+<script>
+/* ============ APP CODE — isko badalne ki zaroorat nahi ============ */
+const S = SETTINGS;
+const $ = id => document.getElementById(id);
+const enc = encodeURIComponent;
+const norm = s => String(s).toLowerCase().trim();
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const KEY = "gosearch_";
+function load(k, d){ try { return JSON.parse(localStorage.getItem(KEY+k)) ?? d } catch(e){ return d } }
+function save(k, v){ try { localStorage.setItem(KEY+k, JSON.stringify(v)) } catch(e){} }
+function safeUrl(u){ u = String(u||"").trim(); if(!u) return ""; if(!/^https?:\/\//i.test(u)) u = "https://"+u; try { return new URL(u).href } catch(e){ return "" } }
+
+/* ---- iPhone: zoom band (pinch + double-tap) ---- */
+["gesturestart","gesturechange","gestureend"].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), { passive:false }));
+document.addEventListener("touchmove", e => { if (e.touches && e.touches.length > 1) e.preventDefault() }, { passive:false });
+let lastTap = 0;
+document.addEventListener("touchend", e => { const now = Date.now(); if (now - lastTap < 300 && !e.target.closest("input,textarea")) e.preventDefault(); lastTap = now }, { passive:false });
+
+/* ---- apply settings ---- */
+document.title = (S.nameFirst + " " + S.nameSecond).trim();
+document.documentElement.style.setProperty("--gold",  S.goldDark);
+document.documentElement.style.setProperty("--gold2", S.goldLight);
+document.querySelectorAll("[data-n1]").forEach(e => e.textContent = S.nameFirst);
+document.querySelectorAll("[data-n2]").forEach(e => e.textContent = S.nameSecond);
+$("tagline").textContent = S.tagline;
+$("homeQ").placeholder = S.placeholder;
+$("footer").textContent = S.footer;
+if (!S.showMyLinksButton) $("linksBtn").style.display = "none";
+
+const TAB_NAMES = Object.keys(S.tabs);
+let tab = TAB_NAMES[0], query = "";
+let history = load("hist", []);
+let userLinks = load("links", []), editIdx = -1;
+
+/* ---- theme ---- */
+function setTheme(d){ document.body.classList.toggle("dark", d); $("themeBtn").textContent = d ? "☀️ Light" : "🌙 Dark"; save("dark", d) }
+setTheme(load("dark", S.startDark));
+$("themeBtn").onclick = () => setTheme(!document.body.classList.contains("dark"));
+
+/* ---- home ---- */
+$("chips").innerHTML = S.suggestions.map(s => `<div class="chip">${esc(s)}</div>`).join("");
+$("chips").onclick = e => { if (e.target.classList.contains("chip")) run(e.target.textContent) };
+function renderRecent(){
+  if (!history.length){ $("recent").innerHTML = ""; return }
+  $("recent").innerHTML = `<h4>Recent <span id="clr">Clear</span></h4>` +
+    history.slice(0, 6).map(h => `<div class="row" data-q="${esc(h)}">🕘 ${esc(h)}</div>`).join("");
+  $("clr").onclick = () => { history = []; save("hist", history); renderRecent() };
+  $("recent").querySelectorAll(".row").forEach(r => r.onclick = () => run(r.dataset.q));
+}
+renderRecent();
+
+$("homeForm").onsubmit = e => { e.preventDefault(); run($("homeQ").value) };
+$("resForm").onsubmit  = e => { e.preventDefault(); run($("resQ").value) };
+$("goHome").onclick = () => { $("results").style.display="none"; $("home").style.display="flex"; $("homeQ").value=""; renderRecent(); $("homeQ").focus() };
+$("tabs").innerHTML = TAB_NAMES.map(t => `<div class="tab" data-t="${esc(t)}">${esc(t)}</div>`).join("");
+$("tabs").onclick = e => { const t = e.target.dataset.t; if (t){ tab = t; render() } };
+
+/* ---- search ---- */
+function run(q){
+  q = q.trim(); if (!q) return;
+  tab = TAB_NAMES[0]; let pick = null;
+  const m = q.match(/^!(\w+)\s+(.+)$/), sc = m && S.shortcuts[m[1].toLowerCase()];
+  if (sc && S.tabs[sc[0]]){ tab = sc[0]; pick = sc[1]; q = m[2] }
+  query = q;
+  history = [q, ...history.filter(h => norm(h) !== norm(q))].slice(0, 20); save("hist", history);
+  $("home").style.display = "none"; $("results").style.display = "block"; $("resQ").value = q;
+  render(pick);
+}
+function render(pick){
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.t === tab));
+  let html = "";
+  if (tab === TAB_NAMES[0]){ html += instant(query) }
+  const list = S.tabs[tab] || [];
+  const ordered = (pick != null && list[pick]) ? [list[pick], ...list.filter((_, i) => i !== pick)] : list;
+  html += `<div class="note">Results for <b>${esc(query)}</b> — tap a source to open it.</div>`;
+  if (tab === TAB_NAMES[0]){ html += pinned(query) }
+  html += ordered.map(([n, c, l, u, d]) => {
+    const href = u.split("{q}").join(enc(query));
+    let host = ""; try { host = new URL(href).hostname } catch(e){}
+    return `<a class="res" href="${esc(href)}" target="_blank" rel="noopener">
+      <div class="src"><div class="fav" style="background:${esc(c)}">${esc(l)}</div><div>${esc(n)}<br><span style="font-size:12px">${esc(host)}</span></div></div>
+      <div class="t">${esc(query)} — ${esc(n)}</div><div class="d">${esc(d)}</div></a>`;
+  }).join("");
+  $("out").innerHTML = html; window.scrollTo(0, 0);
+}
+
+/* ---- my links (SETTINGS + browser) ---- */
+function allLinks(){
+  const fixed = S.myLinks.map(l => ({ kw:(l.words||[]).map(norm), title:l.title||"", url:safeUrl(l.url), note:l.note||"" }));
+  return [...fixed, ...userLinks];
+}
+function pinned(q){
+  const s = norm(q), words = s.split(/\s+/);
+  return allLinks().filter(l => l.kw.some(k => k && (s === k || words.includes(k) || (k.includes(" ") && s.includes(k)))))
+    .map(l => {
+      let host = ""; try { host = new URL(l.url).hostname.replace(/^www\./, "") } catch(e){}
+      const title = l.title || host || l.kw[0];
+      const inner = `<div class="src"><div class="fav" style="background:${esc(S.goldDark)}">${esc(title.charAt(0).toUpperCase())}</div><div>${esc(title)}<br><span style="font-size:12px">${esc(host)}</span></div></div>
+        <div class="t">${esc(title)}</div>${l.note ? `<div class="d">${esc(l.note)}</div>` : ""}`;
+      return l.url ? `<a class="res" href="${esc(l.url)}" target="_blank" rel="noopener">${inner}</a>` : `<div class="res">${inner}</div>`;
+    }).join("");
+}
+function renderList(){
+  $("list").innerHTML = userLinks.length ? userLinks.map((l, i) => `<div class="item"><div style="min-width:0"><div class="kw">${l.kw.map(esc).join(", ")}</div><div class="it">${esc(l.title || l.url || "(note)")}</div>${l.url ? `<div class="iu">${esc(l.url)}</div>` : ""}</div>
+    <div class="acts"><button data-e="${i}">Edit</button><button data-d="${i}">Delete</button></div></div>`).join("") : `<div class="hint">No browser links yet.</div>`;
+}
+function resetForm(){ ["fKw","fTitle","fUrl","fNote"].forEach(id => $(id).value = ""); editIdx = -1; $("cancelEdit").style.display = "none"; $("saveBtn").textContent = "Save" }
+function flash(t){ $("msg").textContent = t; setTimeout(() => { if ($("msg").textContent === t) $("msg").textContent = "" }, 2500) }
+$("linksBtn").onclick = () => { $("ov").style.display = "flex"; renderList(); $("fKw").focus() };
+$("closeBtn").onclick = () => { $("ov").style.display = "none"; resetForm() };
+$("ov").onclick = e => { if (e.target.id === "ov") $("closeBtn").onclick() };
+$("cancelEdit").onclick = resetForm;
+$("saveBtn").onclick = () => {
+  const kw = $("fKw").value.split(",").map(norm).filter(Boolean);
+  const url = safeUrl($("fUrl").value), title = $("fTitle").value.trim(), note = $("fNote").value.trim();
+  if (!kw.length) return flash("Please add at least one word.");
+  if ($("fUrl").value.trim() && !url) return flash("That link doesn't look right.");
+  if (!url && !note && !title) return flash("Add a link or a note.");
+  const item = { kw, title, url, note };
+  if (editIdx >= 0) userLinks[editIdx] = item; else userLinks.unshift(item);
+  save("links", userLinks); resetForm(); renderList(); flash("Saved ✓");
+};
+$("list").onclick = e => {
+  const d = e.target.dataset;
+  if (d.d != null){ userLinks.splice(+d.d, 1); save("links", userLinks); renderList(); resetForm(); flash("Deleted") }
+  if (d.e != null){ const l = userLinks[+d.e]; editIdx = +d.e; $("fKw").value = l.kw.join(", "); $("fTitle").value = l.title; $("fUrl").value = l.url; $("fNote").value = l.note; $("cancelEdit").style.display = ""; $("saveBtn").textContent = "Update" }
+};
+
+/* ---- instant answers ---- */
+function card(lbl, big, sub){ return `<div class="answer"><div class="lbl">${lbl}</div><div class="big">${big}</div>${sub ? `<div class="sub">${sub}</div>` : ""}</div>` }
+function fmt(n){ return Number.isInteger(n) ? n.toLocaleString("en-IN") : (+n.toPrecision(10)).toLocaleString("en-IN", { maximumFractionDigits: 6 }) }
+function instant(q){
+  const s = norm(q);
+  if (/^(time|current time|time now|what time is it|samay)$/.test(s)){
+    const now = new Date();
+    const rows = S.clocks.map(([n, z]) => { try { return `<tr><td>${esc(n)}</td><td><b>${now.toLocaleTimeString("en-US",{timeZone:z,hour:"numeric",minute:"2-digit"})}</b></td><td style="color:var(--muted)">${now.toLocaleDateString("en-US",{timeZone:z,weekday:"short",month:"short",day:"numeric"})}</td></tr>` } catch(e){ return "" } }).join("");
+    return `<div class="answer"><div class="lbl">World clock</div><table>${rows}</table></div>`;
+  }
+  let m = s.match(/^([\d.]+)\s*%\s*(of)?\s*([\d.,]+)$/);
+  if (m){ const v = parseFloat(m[1]) / 100 * parseFloat(m[3].replace(/,/g, "")); return card("Calculator", fmt(v), `${esc(m[1])}% of ${esc(m[3])}`) }
+  m = s.match(/^([\d.]+)\s*([a-z°]+)\s+(to|in)\s+([a-z°]+)$/);
+  if (m){ const r = convert(parseFloat(m[1]), m[2], m[4]); if (r != null) return card("Unit converter", `${fmt(r)} ${esc(m[4])}`, `${esc(m[1])} ${esc(m[2])} =`) }
+  if (/^[\d\s+\-*/().^x×÷]+$/.test(s) && /\d/.test(s) && /[+\-*/^x×÷]/.test(s)){
+    const expr = s.replace(/x|×/g, "*").replace(/÷/g, "/").replace(/\^/g, "**");
+    try { const v = Function('"use strict";return (' + expr + ')')(); if (isFinite(v)) return card("Calculator", fmt(v), esc(q) + " =") } catch(e){}
+  }
+  if (/\b(usd|inr|dollar|rupee|eur|euro)\b.*\b(to|in)\b/.test(s)) return card("Currency", "Live rate", "Exchange rates change every minute — open Google below for the live rate.");
+  return "";
+}
+const U = {
+  len:{mm:.001,cm:.01,m:1,km:1000,in:.0254,inch:.0254,inches:.0254,ft:.3048,feet:.3048,foot:.3048,yd:.9144,mile:1609.344,miles:1609.344,mi:1609.344},
+  wt:{mg:.000001,g:.001,kg:1,lb:.45359237,lbs:.45359237,pound:.45359237,pounds:.45359237,oz:.0283495},
+  vol:{ml:.001,l:1,litre:1,liter:1,gallon:3.78541,gal:3.78541,cup:.236588,cups:.236588}
+};
+function convert(v, a, b){
+  const t = {c:"c","°c":"c",celsius:"c",f:"f","°f":"f",fahrenheit:"f",k:"k",kelvin:"k"};
+  if (t[a] && t[b]){ const c = t[a]==="c" ? v : t[a]==="f" ? (v-32)*5/9 : v-273.15; return t[b]==="c" ? c : t[b]==="f" ? c*9/5+32 : c+273.15 }
+  for (const g of Object.values(U)) if (g[a] && g[b]) return v * g[a] / g[b];
+  return null;
+}
+</script>
+</body>
+</html>
